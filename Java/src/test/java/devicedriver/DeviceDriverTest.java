@@ -5,10 +5,15 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class DeviceDriverTest {
+class DeviceDriverTest {
 
   @Test
   void foo() {
-    assertThat(true, is(false));
+    FlashMemoryDevice hardware = null;
+    final DeviceDriver deviceDriver = new DeviceDriver(hardware);
+
+    final byte bytesRead = deviceDriver.read(0x00);
+
+    assertThat(bytesRead, is(0));
   }
 }
