@@ -8,12 +8,13 @@ import static org.hamcrest.Matchers.is;
 class DeviceDriverTest {
 
   @Test
-  void foo() {
+  void read_From_Hardware() {
+    // TODO: replace hardware with a Test Double
     FlashMemoryDevice hardware = null;
-    final DeviceDriver deviceDriver = new DeviceDriver(hardware);
+    final DeviceDriver driver = new DeviceDriver(hardware);
 
-    final byte bytesRead = deviceDriver.read(0x00);
+    final byte data = driver.read(0xFF);
 
-    assertThat(bytesRead, is(0));
+    assertThat(data, is(0));
   }
 }
