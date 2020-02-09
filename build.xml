@@ -40,6 +40,9 @@
                 <!-- ignore idea -->
                 <exclude name="**/.idea/" />
                 <exclude name="**/*.iml" />
+                <!-- ignore JavaScript build outputs -->
+                <exclude name="JavaScript/coverage/" />
+                <exclude name="JavaScript/.nyc_output/" />
             </zipfileset>
          </zip>
     </target>
