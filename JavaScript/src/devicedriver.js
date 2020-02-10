@@ -51,29 +51,34 @@ class DeviceDriver {
     }
 }
 
-function VppException() {
-    this.message = 'vpp exception';
-    this.name = 'VppException'
+class VppException extends Error {
+    constructor() {
+        super('vpp exception');
+    }
 }
 
-function InternalErrorException() {
-    this.message = 'internal error';
-    this.name = 'InternalErrorException'
+class InternalErrorException extends Error {
+    constructor() {
+        super('internal error');
+    }
 }
 
-function ProtectedBlockException() {
-    this.message = 'protected block';
-    this.name = 'ProtectedBlockException'
+class ProtectedBlockException extends Error {
+    constructor() {
+        super('protected block');
+    }
 }
 
-function TimeoutException(message) {
-    this.message = message;
-    this.name = 'TimeoutException'
+class TimeoutException extends Error {
+    constructor() {
+        super(message);
+    }
 }
 
-function ReadFailureException(message) {
-    this.message = message;
-    this.name = 'ReadFailureException'
+class ReadFailureException extends Error {
+    constructor() {
+        super(message);
+    }
 }
 
 module.exports = {
@@ -83,4 +88,4 @@ module.exports = {
     ProtectedBlockException,
     TimeoutException,
     ReadFailureException
-}
+};
