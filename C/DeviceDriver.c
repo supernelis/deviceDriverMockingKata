@@ -1,4 +1,5 @@
 #include "DeviceDriver.h"
+#include <sys/time.h>
 /*
  * DeviceDriver is used by the operating system to interact with the hardware 'FlashMemoryDevice'.
  */
@@ -9,7 +10,7 @@ const Byte program_command = 0x40;
 const Byte ready_mask = 0x02;
 const Byte ready_no_error = 0x00;
 
-// const unsigned long timeout_threshold = 100_000_000;
+const long timeout_threshold_microseconds = 100000;
 
 const Byte reset_command = 0xff;
 const Byte vpp_mask = 0x20;
@@ -23,8 +24,13 @@ Byte driver_read(const Address address)
 
 DriverStatus driver_write(const Address address, const Byte data)
 {
+    struct timeval start_time;
+    struct timeval current_time;
     Byte readyByte;
-    // long start = System.nanoTime();
+    long elapsed_microseconds;
+
+    gettimeofday(&start_time, NULL);
+
     device_write(init_address, program_command);
     device_write(address, data);
 
@@ -41,10 +47,14 @@ DriverStatus driver_write(const Address address, const Byte data)
                 return ErrorWriteProtectedBlock;
             }
         }
-        // if (System.nanoTime() - start > timeout_threshold)
-        // {
-        //   return ErrorWriteTimeout;
-        // }
+
+        /* see https://stackoverflow.com/a/12722972/104143 */
+        gettimeofday(&current_time, NULL);
+        elapsed_microseconds = (current_time.tv_sec - start_time.tv_sec) * 1000000L + /* */
+                               current_time.tv_usec - start_time.tv_usec;
+        if (elapsed_microseconds > timeout_threshold_microseconds) {
+            return ErrorWriteTimeout;
+        }
     }
     Byte actual = driver_read(address);
     if (data != actual) {
