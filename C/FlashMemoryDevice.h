@@ -4,7 +4,8 @@
  * However, the interface for using the device is a lot more complex than that.
  * It is outlined in the top-level README file.
  */
-typedef unsigned char byte;
+typedef unsigned long Address;
+typedef unsigned char Byte;
 
-extern byte read(const unsigned long address);
-extern void write(const unsigned long address, const byte data);
+extern Byte device_read(const Address address);
+extern void device_write(const Address address, const Byte data);
