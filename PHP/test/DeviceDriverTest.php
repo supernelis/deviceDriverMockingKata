@@ -2,6 +2,7 @@
 namespace Test;
 
 use DeviceDriver\DeviceDriver;
+use DeviceDriver\FlashMemoryDevice;
 use PHPUnit\Framework\TestCase;
 
 class DeviceDriverTest extends TestCase
