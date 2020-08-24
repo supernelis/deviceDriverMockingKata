@@ -5,15 +5,18 @@ package devicedriver;
  */
 public class DeviceDriver {
 
-  private static final long INIT_ADDRESS = 0X0;
-  private static final byte PROGRAM_COMMAND = 0X40;
+  private static final long INIT_ADDRESS = 0x00;
+
+  private static final byte PROGRAM_COMMAND = 0x40;
   private static final byte READY_MASK = 0x02;
   private static final byte READY_NO_ERROR = 0x00;
+
   private static final long TIMEOUT_THRESHOLD = 100_000_000;
+
   private static final byte RESET_COMMAND = (byte) 0xFF;
   private static final byte VPP_MASK = 0x20;
   private static final byte INTERNAL_ERROR_MASK = 0x10;
-  private static final byte PROTECTED_BLOCK_ERROR_MASK = 0X08;
+  private static final byte PROTECTED_BLOCK_ERROR_MASK = 0x08;
 
   private final FlashMemoryDevice hardware;
 

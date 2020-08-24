@@ -1,14 +1,17 @@
 const nanoTime = require('nano-time');
 
-const INIT_ADDRESS = 0X0;
-const PROGRAM_COMMAND = 0X40;
+const INIT_ADDRESS = 0x00;
+
+const PROGRAM_COMMAND = 0x40;
 const READY_MASK = 0x02;
 const READY_NO_ERROR = 0x00;
+
 const TIMEOUT_THRESHOLD = 100_000_000;
+
 const RESET_COMMAND = 0xFF;
 const VPP_MASK = 0x20;
 const INTERNAL_ERROR_MASK = 0x10;
-const PROTECTED_BLOCK_ERROR_MASK = 0X08;
+const PROTECTED_BLOCK_ERROR_MASK = 0x08;
 
 /**
  * This class is used by the operating system to interact with the hardware.
