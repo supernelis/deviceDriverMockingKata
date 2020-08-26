@@ -6,7 +6,7 @@ const PROGRAM_COMMAND = 0x40;
 const READY_MASK = 0x02;
 const READY_NO_ERROR = 0x00;
 
-const TIMEOUT_THRESHOLD = 100_000_000;
+const TIMEOUT_THRESHOLD = 100000000;
 
 const RESET_COMMAND = 0xFF;
 const VPP_MASK = 0x20;
@@ -29,8 +29,8 @@ class DeviceDriver {
         let start = nanoTime();
         this.hardware.write(INIT_ADDRESS, PROGRAM_COMMAND);
         this.hardware.write(address, data);
-        var readyByte;
-        while (((readyByte = read(INIT_ADDRESS)) & READY_MASK) == 0) {
+        let readyByte;
+        while (((readyByte = this.read(INIT_ADDRESS)) & READY_MASK) == 0) {
             if (readyByte != READY_NO_ERROR) {
                 this.hardware.write(INIT_ADDRESS, RESET_COMMAND);
                 if ((readyByte & VPP_MASK) > 0) {
@@ -47,7 +47,7 @@ class DeviceDriver {
                 throw new TimeoutException('Timeout when trying to read data from memory');
             }
         }
-        const actual = read(address);
+        const actual = this.read(address);
         if (data != actual) {
             throw ReadFailureException('Failed to read data from memory');
         }
@@ -73,13 +73,13 @@ class ProtectedBlockException extends Error {
 }
 
 class TimeoutException extends Error {
-    constructor() {
+    constructor(message) {
         super(message);
     }
 }
 
 class ReadFailureException extends Error {
-    constructor() {
+    constructor(message) {
         super(message);
     }
 }
