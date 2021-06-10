@@ -6,7 +6,7 @@ describe("Device Driver", function() {
 
   it("should foo", function() {
     // TODO: replace hardware with a Test Double
-    const hardware = new FlashMemoryDevice();
+    const hardware = { read: ()=> {return 0}};
     const driver = new DeviceDriver(hardware);
 
     const data = driver.read(0xFF);
