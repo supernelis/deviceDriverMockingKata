@@ -13,9 +13,14 @@ describe("Device Driver", function() {
   });
 
   it("writes to an address", () => {
-    const hardware = { read: ()=> { return 2 }, write: ()=> {}};
+    let writeData;
+    const hardware = { read: ()=> { return 2 }, write: (address, data)=> {
+        writeData = data;
+      }};
     const driver = new DeviceDriver(hardware);
 
     driver.write(0xFF, 2);
+
+    expect(writeData).to.equal(2);
   });
 });
