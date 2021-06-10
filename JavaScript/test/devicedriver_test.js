@@ -13,14 +13,16 @@ describe("Device Driver", function() {
   });
 
   it("writes to an address", () => {
-    let writeData;
+    let writeData = [];
     const hardware = { read: ()=> { return 2 }, write: (address, data)=> {
-        writeData = data;
+        writeData.push({'address': address, 'data':data});
       }};
     const driver = new DeviceDriver(hardware);
 
     driver.write(0xFF, 2);
 
-    expect(writeData).to.equal(2);
+    let secondValue = writeData[1];
+    expect(secondValue['data']).to.equal(2);
+    expect(secondValue['address']).to.equal(0xFF);
   });
 });
