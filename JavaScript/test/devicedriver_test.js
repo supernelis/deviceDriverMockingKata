@@ -11,4 +11,11 @@ describe("Device Driver", function() {
 
     expect(data).to.equal(0);
   });
+
+  it("writes to an address", () => {
+    const hardware = { read: ()=> { return 2 }, write: ()=> {}};
+    const driver = new DeviceDriver(hardware);
+
+    driver.write(0xFF, 2);
+  });
 });
