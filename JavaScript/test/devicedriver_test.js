@@ -1,11 +1,9 @@
 const {expect} = require('chai');
 const {DeviceDriver} = require('../src/devicedriver');
-const {FlashMemoryDevice} = require('../src/flashmemorydevice');
 
 describe("Device Driver", function() {
 
-  it("should foo", function() {
-    // TODO: replace hardware with a Test Double
+  it("reads an address", function() {
     const hardware = { read: ()=> {return 0}};
     const driver = new DeviceDriver(hardware);
 
