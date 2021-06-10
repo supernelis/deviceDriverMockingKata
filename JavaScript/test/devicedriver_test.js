@@ -21,8 +21,12 @@ describe("Device Driver", function() {
 
     driver.write(0xFF, 2);
 
+    let firstValue = writeData[0];
+    expect(firstValue['address']).to.equal(0x00);
+    expect(firstValue['data']).to.equal(0x40);
+
     let secondValue = writeData[1];
-    expect(secondValue['data']).to.equal(2);
     expect(secondValue['address']).to.equal(0xFF);
+    expect(secondValue['data']).to.equal(2);
   });
 });
