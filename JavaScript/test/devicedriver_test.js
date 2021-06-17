@@ -64,7 +64,7 @@ describe("Device Driver", function() {
     assert.throw(() => {driver.write(0xFF, 5)}, TimeoutException);
   });
 
-  it('something', () => {
+  it('resets hardware when it is not ready after write', () => {
     let testData = 8;
     let writeData;
     let readValues = [1, 2, testData];
