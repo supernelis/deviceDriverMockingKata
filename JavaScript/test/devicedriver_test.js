@@ -63,4 +63,24 @@ describe("Device Driver", function() {
 
     assert.throw(() => {driver.write(0xFF, 5)}, TimeoutException);
   });
+
+  it('something', () => {
+    let testData = 8;
+    let writeData;
+    let readValues = [1, 2, testData];
+    const hardware = {
+      read: () => readValues.shift(),
+      write: (address,data) => {
+        writeData = {
+          address: address,
+          data: data
+        }
+      }
+    }
+    const device = new DeviceDriver(hardware);
+    device.write(0xCC, testData);
+
+    expect(writeData.address).to.equal(0x00);
+    expect(writeData.data).to.equal(0xFF);
+  });
 });

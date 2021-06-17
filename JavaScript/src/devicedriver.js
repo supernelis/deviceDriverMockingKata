@@ -3,7 +3,7 @@ const nanoTime = require('nano-time');
 const INIT_ADDRESS = 0x00;
 
 const PROGRAM_COMMAND = 0x40;
-const READY_MASK = 0x02;
+const READY_MASK = 0x02; // 10
 const READY_NO_ERROR = 0x00;
 
 const TIMEOUT_THRESHOLD = 100000000;
@@ -11,7 +11,7 @@ const TIMEOUT_THRESHOLD = 100000000;
 const RESET_COMMAND = 0xFF;
 const VPP_MASK = 0x20;
 const INTERNAL_ERROR_MASK = 0x10;
-const PROTECTED_BLOCK_ERROR_MASK = 0x08;
+const PROTECTED_BLOCK_ERROR_MASK = 0x08; // 1000
 
 /**
  * This class is used by the operating system to interact with the hardware.
@@ -31,6 +31,7 @@ class DeviceDriver {
         this.hardware.write(address, data);
         let readyByte;
         while (((readyByte = this.read(INIT_ADDRESS)) & READY_MASK) == 0) {
+            console.log(readyByte);
             if (readyByte != READY_NO_ERROR) {
                 this.hardware.write(INIT_ADDRESS, RESET_COMMAND);
                 if ((readyByte & VPP_MASK) > 0) {
@@ -40,6 +41,7 @@ class DeviceDriver {
                     throw new InternalErrorException();
                 }
                 if ((readyByte & PROTECTED_BLOCK_ERROR_MASK) > 0) {
+                    console.log("Reached it with " + readyByte);
                     throw new ProtectedBlockException();
                 }
             }
