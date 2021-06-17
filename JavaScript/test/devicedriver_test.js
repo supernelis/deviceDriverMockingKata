@@ -12,7 +12,7 @@ describe("Device Driver", function() {
     expect(data).to.equal(0);
   });
 
-  it("writes to an address", () => {
+  it("initialise and writes to an address", () => {
     let writeData = [];
     const hardware = { read: ()=> { return 2 }, write: (address, data)=> {
         writeData.push({'address': address, 'data':data});
