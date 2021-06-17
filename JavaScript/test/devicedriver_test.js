@@ -1,5 +1,5 @@
 const {expect, assert} = require('chai');
-const {DeviceDriver, ReadFailureException} = require('../src/devicedriver');
+const {DeviceDriver, ReadFailureException, TimeoutException} = require('../src/devicedriver');
 
 describe("Device Driver", function() {
 
@@ -52,5 +52,15 @@ describe("Device Driver", function() {
    driver.write(0xFF, testData);
 
    expect(readCallCount).to.equal(3);
- })
+  });
+
+  it('timeout', () => {
+    const hardware = {
+      read: () => 0,
+      write: () => {}
+    }
+    const driver = new DeviceDriver(hardware);
+
+    assert.throw(() => {driver.write(0xFF, 5)}, TimeoutException);
+  });
 });
