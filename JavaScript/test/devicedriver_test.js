@@ -1,6 +1,7 @@
 const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException} = require('../src/devicedriver');
 
+const READY = 2;
 describe("Device Driver", function() {
 
   it("reads an address", function() {
@@ -67,7 +68,7 @@ describe("Device Driver", function() {
   it('resets hardware when it is not ready after write', () => {
     let testData = 8;
     let writeData;
-    let readValues = [1, 2, testData];
+    let readValues = [1, READY, testData];
     const hardware = {
       read: () => readValues.shift(),
       write: (address,data) => {
