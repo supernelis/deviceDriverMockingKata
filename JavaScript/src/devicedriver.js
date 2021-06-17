@@ -49,7 +49,7 @@ class DeviceDriver {
         }
         const actual = this.read(address);
         if (data != actual) {
-            throw ReadFailureException('Failed to read data from memory');
+            throw new ReadFailureException('Failed to read data from memory');
         }
     }
 }

@@ -1,5 +1,5 @@
-const {expect} = require('chai');
-const {DeviceDriver} = require('../src/devicedriver');
+const {expect, assert} = require('chai');
+const {DeviceDriver, ReadFailureException} = require('../src/devicedriver');
 
 describe("Device Driver", function() {
 
@@ -28,5 +28,11 @@ describe("Device Driver", function() {
     let secondValue = writeData[1];
     expect(secondValue['address']).to.equal(0xFF);
     expect(secondValue['data']).to.equal(2);
+  });
+
+  it('read failure', () => {
+    const hardware = {read: () => 2, write: () => {}}
+    const driver = new DeviceDriver(hardware);
+    assert.throw(() => { driver.write(0xFF, 5) }, ReadFailureException);
   });
 });
