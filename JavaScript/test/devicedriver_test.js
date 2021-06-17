@@ -37,22 +37,20 @@ describe("Device Driver", function() {
   });
 
  it( 'checks if the hardware is ready after a write', () => {
-   // first time: should return 0
-   // second time: return 2
-   // third time: return data
-   let readCalls = 0;
-   let dataValues = [0,2,5];
+   let readCallCount = 0;
+   const testData = 5;
+   const readValues = [0, 2, testData];
    const hardware = {
      read: () => {
-       readCalls++;
-       return dataValues.shift();
+       readCallCount++;
+       return readValues.shift();
      },
      write: () => {}
    }
    const driver = new DeviceDriver(hardware);
 
-   driver.write(0xFF, 5);
+   driver.write(0xFF, testData);
 
-   expect(readCalls).to.equal(3);
+   expect(readCallCount).to.equal(3);
  })
 });
