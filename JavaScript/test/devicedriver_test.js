@@ -35,4 +35,24 @@ describe("Device Driver", function() {
     const driver = new DeviceDriver(hardware);
     assert.throw(() => { driver.write(0xFF, 5) }, ReadFailureException);
   });
+
+ it( 'checks if the hardware is ready after a write', () => {
+   // first time: should return 0
+   // second time: return 2
+   // third time: return data
+   let readCalls = 0;
+   let dataValues = [0,2,5];
+   const hardware = {
+     read: () => {
+       readCalls++;
+       return dataValues.shift();
+     },
+     write: () => {}
+   }
+   const driver = new DeviceDriver(hardware);
+
+   driver.write(0xFF, 5);
+
+   expect(readCalls).to.equal(3);
+ })
 });

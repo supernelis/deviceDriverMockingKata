@@ -47,6 +47,7 @@ class DeviceDriver {
                 throw new TimeoutException('Timeout when trying to read data from memory');
             }
         }
+
         const actual = this.read(address);
         if (data != actual) {
             throw new ReadFailureException('Failed to read data from memory');
