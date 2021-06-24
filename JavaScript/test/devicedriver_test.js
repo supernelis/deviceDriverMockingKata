@@ -51,16 +51,7 @@ describe("Device Driver", function () {
     });
 
     it('read failure', () => {
-        const memory = {};
-        memory[INIT_ADDRESS] = READY;
         memory[AN_ADDRESS] = ANOTHER_VALUE;
-        const hardware = {
-            read: (address) => memory[address],
-            write: () => {
-            }
-        }
-
-        const driver = new DeviceDriver(hardware);
 
         assert.throw(() => {
             driver.write(AN_ADDRESS, A_VALUE);
