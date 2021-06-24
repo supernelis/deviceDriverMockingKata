@@ -37,9 +37,9 @@ describe("Device Driver", function () {
     });
 
     it("initialise and writes to an address", () => {
-        memory[AN_ADDRESS] = ANOTHER_VALUE;
+        memory[AN_ADDRESS] = A_VALUE;
 
-        driver.write(AN_ADDRESS, ANOTHER_VALUE);
+        driver.write(AN_ADDRESS, A_VALUE);
 
         let firstValue = writeData[0];
         expect(firstValue['address']).to.equal(INIT_ADDRESS);
@@ -47,7 +47,7 @@ describe("Device Driver", function () {
 
         let secondValue = writeData[1];
         expect(secondValue['address']).to.equal(AN_ADDRESS);
-        expect(secondValue['data']).to.equal(ANOTHER_VALUE);
+        expect(secondValue['data']).to.equal(A_VALUE);
     });
 
     it('read failure', () => {
