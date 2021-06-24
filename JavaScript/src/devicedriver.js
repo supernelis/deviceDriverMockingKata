@@ -31,7 +31,6 @@ class DeviceDriver {
         this.hardware.write(address, data);
         let readyByte;
         while (((readyByte = this.read(INIT_ADDRESS)) & READY_MASK) == 0) {
-            console.log(readyByte);
             if (readyByte != READY_NO_ERROR) {
                 this.hardware.write(INIT_ADDRESS, RESET_COMMAND);
                 if ((readyByte & VPP_MASK) > 0) {
