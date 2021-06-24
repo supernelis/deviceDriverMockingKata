@@ -66,7 +66,7 @@ describe("Device Driver", function () {
         memory[INIT_ADDRESS] = BUSY;
         hardware.read = (address) => {
             readCallCount++;
-            if(address === INIT_ADDRESS && readCallCount === 2) {
+            if(address === INIT_ADDRESS && initAddressReads === 1) {
                 initAddressReads++;
                 return READY;
             }
