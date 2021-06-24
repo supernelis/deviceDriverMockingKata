@@ -61,19 +61,16 @@ describe("Device Driver", function () {
 
     it('checks if the hardware is ready after a write', () => {
         let initAddressReads = 0;
-
-        memory[INIT_ADDRESS] = BUSY;
         hardware.read = (address) => {
-            if(address === INIT_ADDRESS && initAddressReads === 1) {
+            if (address === INIT_ADDRESS && initAddressReads === 0) {
+                initAddressReads++;
+                return BUSY;
+            }
+            if (address === INIT_ADDRESS && initAddressReads === 1) {
                 initAddressReads++;
                 return READY;
             }
-            if(address === INIT_ADDRESS) {
-                initAddressReads++;
-                const value = memory[address];
-                memory[address] = READY;
-                return value;
-            }
+
             return A_VALUE;
         }
 
