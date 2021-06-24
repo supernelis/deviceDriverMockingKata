@@ -61,16 +61,17 @@ describe("Device Driver", function () {
 
     it('checks if the hardware is ready after a write', () => {
         let readCallCount = 0;
-        const readValues = [BUSY, READY, A_VALUE];
-        const hardware = {
-            read: () => {
-                readCallCount++;
-                return readValues.shift();
-            },
-            write: () => {
+        memory[INIT_ADDRESS] = BUSY;
+        memory[AN_ADDRESS] = A_VALUE;
+        hardware.read = (address) => {
+            readCallCount++;
+            if(address === INIT_ADDRESS) {
+                const value = memory[address];
+                memory[address] = READY;
+                return value;
             }
+            return memory[address];
         }
-        const driver = new DeviceDriver(hardware);
 
         driver.write(AN_ADDRESS, A_VALUE);
 
