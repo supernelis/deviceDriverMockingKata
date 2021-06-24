@@ -7,6 +7,7 @@ describe("Device Driver", function () {
     const AN_ADDRESS = 0xFF;
     const READY = 2;
     const A_VALUE = 0;
+    const ANOTHER_VALUE = 2;
 
     it("reads an address", function () {
         const hardware = {
@@ -29,15 +30,15 @@ describe("Device Driver", function () {
         };
         const driver = new DeviceDriver(hardware);
 
-        driver.write(0xFF, 2);
+        driver.write(AN_ADDRESS, ANOTHER_VALUE);
 
         let firstValue = writeData[0];
         expect(firstValue['address']).to.equal(INIT_ADDRESS);
         expect(firstValue['data']).to.equal(PROGRAM_COMMAND);
 
         let secondValue = writeData[1];
-        expect(secondValue['address']).to.equal(0xFF);
-        expect(secondValue['data']).to.equal(2);
+        expect(secondValue['address']).to.equal(AN_ADDRESS);
+        expect(secondValue['data']).to.equal(ANOTHER_VALUE);
     });
 
     it('read failure', () => {
