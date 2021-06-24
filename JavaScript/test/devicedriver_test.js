@@ -2,6 +2,8 @@ const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException} = require('../src/devicedriver');
 
 describe("Device Driver", function () {
+    const INIT_ADDRESS = 0x00;
+    const PROGRAM_COMMAND = 0x40;
     const AN_ADDRESS = 0xFF;
     const READY = 2;
     const A_VALUE = 0;
@@ -20,9 +22,8 @@ describe("Device Driver", function () {
     it("initialise and writes to an address", () => {
         let writeData = [];
         const hardware = {
-            read: () => {
-                return 2
-            }, write: (address, data) => {
+            read: () => READY,
+            write: (address, data) => {
                 writeData.push({'address': address, 'data': data});
             }
         };
@@ -31,8 +32,8 @@ describe("Device Driver", function () {
         driver.write(0xFF, 2);
 
         let firstValue = writeData[0];
-        expect(firstValue['address']).to.equal(0x00);
-        expect(firstValue['data']).to.equal(0x40);
+        expect(firstValue['address']).to.equal(INIT_ADDRESS);
+        expect(firstValue['data']).to.equal(PROGRAM_COMMAND);
 
         let secondValue = writeData[1];
         expect(secondValue['address']).to.equal(0xFF);
