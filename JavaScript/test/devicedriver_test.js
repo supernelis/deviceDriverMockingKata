@@ -8,9 +8,7 @@ describe("Device Driver", function () {
 
     it("reads an address", function () {
         const hardware = {
-            read: () => {
-                return A_VALUE;
-            }
+            read: () => A_VALUE
         };
         const driver = new DeviceDriver(hardware);
 
