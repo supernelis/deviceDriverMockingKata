@@ -22,9 +22,11 @@ describe("Device Driver", function () {
 
     it("initialise and writes to an address", () => {
         let writeData = [];
-        const readValues = [READY, ANOTHER_VALUE];
+        const memory = {};
+        memory[INIT_ADDRESS] = READY;
+        memory[AN_ADDRESS] = ANOTHER_VALUE;
         const hardware = {
-            read: () => readValues.shift(),
+            read: (address) => memory[address],
             write: (address, data) => {
                 writeData.push({'address': address, 'data': data});
             }
