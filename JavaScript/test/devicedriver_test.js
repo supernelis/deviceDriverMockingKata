@@ -7,7 +7,7 @@ describe("Device Driver", function () {
     const AN_ADDRESS = 0xFF;
     const READY = 2;
     const A_VALUE = 0;
-    const ANOTHER_VALUE = 2;
+    const ANOTHER_VALUE = 5;
 
     it("reads an address", function () {
         const hardware = {
@@ -22,8 +22,9 @@ describe("Device Driver", function () {
 
     it("initialise and writes to an address", () => {
         let writeData = [];
+        const readValues = [READY, ANOTHER_VALUE];
         const hardware = {
-            read: () => READY,
+            read: () => readValues.shift(),
             write: (address, data) => {
                 writeData.push({'address': address, 'data': data});
             }
