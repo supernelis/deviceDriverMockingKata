@@ -9,6 +9,25 @@ describe("Device Driver", function () {
     const A_VALUE = 0;
     const ANOTHER_VALUE = 5;
 
+    let writeData;
+    let memory;
+    let hardware;
+    let driver;
+
+    beforeEach(() => {
+        writeData = [];
+        memory = {};
+        memory[INIT_ADDRESS] = READY;
+        hardware = {
+            read: (address) => memory[address],
+            write: (address, data) => {
+                writeData.push({'address': address, 'data': data});
+            }
+        };
+        driver = new DeviceDriver(hardware);
+    });
+
+
     it("reads an address", function () {
         const hardware = {
             read: () => A_VALUE
@@ -21,17 +40,7 @@ describe("Device Driver", function () {
     });
 
     it("initialise and writes to an address", () => {
-        let writeData = [];
-        const memory = {};
-        memory[INIT_ADDRESS] = READY;
         memory[AN_ADDRESS] = ANOTHER_VALUE;
-        const hardware = {
-            read: (address) => memory[address],
-            write: (address, data) => {
-                writeData.push({'address': address, 'data': data});
-            }
-        };
-        const driver = new DeviceDriver(hardware);
 
         driver.write(AN_ADDRESS, ANOTHER_VALUE);
 
@@ -50,7 +59,8 @@ describe("Device Driver", function () {
         memory[AN_ADDRESS] = ANOTHER_VALUE;
         const hardware = {
             read: (address) => memory[address],
-            write: () => {}
+            write: () => {
+            }
         }
 
         const driver = new DeviceDriver(hardware);
