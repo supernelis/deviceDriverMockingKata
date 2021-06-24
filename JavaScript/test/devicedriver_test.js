@@ -9,19 +9,19 @@ describe("Device Driver", function () {
     const A_VALUE = 0;
     const ANOTHER_VALUE = 5;
 
-    let writeData;
+    let writeLog;
     let memory;
     let hardware;
     let driver;
 
     beforeEach(() => {
-        writeData = [];
+        writeLog = [];
         memory = {};
         memory[INIT_ADDRESS] = READY;
         hardware = {
             read: (address) => memory[address],
             write: (address, data) => {
-                writeData.push({'address': address, 'data': data});
+                writeLog.push({'address': address, 'data': data});
             }
         };
         driver = new DeviceDriver(hardware);
@@ -41,11 +41,11 @@ describe("Device Driver", function () {
 
         driver.write(AN_ADDRESS, A_VALUE);
 
-        let firstValue = writeData[0];
+        let firstValue = writeLog[0];
         expect(firstValue['address']).to.equal(INIT_ADDRESS);
         expect(firstValue['data']).to.equal(PROGRAM_COMMAND);
 
-        let secondValue = writeData[1];
+        let secondValue = writeLog[1];
         expect(secondValue['address']).to.equal(AN_ADDRESS);
         expect(secondValue['data']).to.equal(A_VALUE);
     });
