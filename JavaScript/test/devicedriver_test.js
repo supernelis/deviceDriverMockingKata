@@ -60,12 +60,10 @@ describe("Device Driver", function () {
     });
 
     it('checks if the hardware is ready after a write', () => {
-        let readCallCount = 0;
         let initAddressReads = 0;
 
         memory[INIT_ADDRESS] = BUSY;
         hardware.read = (address) => {
-            readCallCount++;
             if(address === INIT_ADDRESS && initAddressReads === 1) {
                 initAddressReads++;
                 return READY;
@@ -81,7 +79,6 @@ describe("Device Driver", function () {
 
         driver.write(AN_ADDRESS, A_VALUE);
 
-        expect(readCallCount).to.equal(3);
         expect(initAddressReads).to.equal(2);
     });
 
