@@ -6,6 +6,7 @@ describe("Device Driver", function () {
     const PROGRAM_COMMAND = 0x40;
     const AN_ADDRESS = 0xFF;
     const READY = 2;
+    const BUSY = 0;
     const A_VALUE = 0;
     const ANOTHER_VALUE = 5;
 
@@ -60,8 +61,7 @@ describe("Device Driver", function () {
 
     it('checks if the hardware is ready after a write', () => {
         let readCallCount = 0;
-        const testData = 5;
-        const readValues = [0, 2, testData];
+        const readValues = [BUSY, READY, A_VALUE];
         const hardware = {
             read: () => {
                 readCallCount++;
@@ -72,7 +72,7 @@ describe("Device Driver", function () {
         }
         const driver = new DeviceDriver(hardware);
 
-        driver.write(0xFF, testData);
+        driver.write(AN_ADDRESS, A_VALUE);
 
         expect(readCallCount).to.equal(3);
     });
