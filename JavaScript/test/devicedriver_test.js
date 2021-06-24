@@ -29,10 +29,7 @@ describe("Device Driver", function () {
 
 
     it("reads an address", function () {
-        const hardware = {
-            read: () => A_VALUE
-        };
-        const driver = new DeviceDriver(hardware);
+        memory[AN_ADDRESS] = A_VALUE;
 
         const data = driver.read(AN_ADDRESS);
 
