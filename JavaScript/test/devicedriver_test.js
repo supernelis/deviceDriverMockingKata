@@ -10,6 +10,7 @@ describe("Device Driver", function () {
     const A_VALUE = 0;
     const ANOTHER_VALUE = 5;
     const RESET_COMMAND = 0xFF;
+    const TRIGGER_RESET = 1;
 
     let writeLog;
     let memory;
@@ -96,7 +97,7 @@ describe("Device Driver", function () {
     it('resets hardware when it is not ready after write', () => {
         let testData = 8;
         let writeData;
-        let readValues = [1, READY, testData];
+        let readValues = [TRIGGER_RESET, READY, testData];
         const hardware = {
             read: () => readValues.shift(),
             write: (address, data) => {
