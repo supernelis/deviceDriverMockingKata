@@ -81,7 +81,7 @@ describe("Device Driver", function () {
 
     it('timeout', () => {
         const hardware = {
-            read: () => 0,
+            read: () => BUSY,
             write: () => {
             }
         }
