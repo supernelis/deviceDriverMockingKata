@@ -85,10 +85,10 @@ describe("Device Driver", function () {
             write: () => {
             }
         }
-        const driver = new DeviceDriver(alwaysBusyReadHardware);
+        const busyDriver = new DeviceDriver(alwaysBusyReadHardware);
 
         assert.throw(() => {
-            driver.write(AN_ADDRESS, ANOTHER_VALUE)
+            busyDriver.write(AN_ADDRESS, ANOTHER_VALUE)
         }, TimeoutException);
     });
 
