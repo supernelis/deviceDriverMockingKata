@@ -9,6 +9,7 @@ describe("Device Driver", function () {
     const BUSY = 0;
     const A_VALUE = 0;
     const ANOTHER_VALUE = 5;
+    const RESET_COMMAND = 0xFF;
 
     let writeLog;
     let memory;
@@ -106,9 +107,9 @@ describe("Device Driver", function () {
             }
         }
         const device = new DeviceDriver(hardware);
-        device.write(0xCC, testData);
+        device.write(AN_ADDRESS, testData);
 
-        expect(writeData.address).to.equal(0x00);
-        expect(writeData.data).to.equal(0xFF);
+        expect(writeData.address).to.equal(INIT_ADDRESS);
+        expect(writeData.data).to.equal(RESET_COMMAND);
     });
 });
