@@ -80,12 +80,12 @@ describe("Device Driver", function () {
     });
 
     it('timeout', () => {
-        const hardware = {
+        const alwaysBusyReadHardware = {
             read: () => BUSY,
             write: () => {
             }
         }
-        const driver = new DeviceDriver(hardware);
+        const driver = new DeviceDriver(alwaysBusyReadHardware);
 
         assert.throw(() => {
             driver.write(AN_ADDRESS, ANOTHER_VALUE)
