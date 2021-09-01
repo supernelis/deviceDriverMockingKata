@@ -4,7 +4,7 @@ const {DeviceDriver, ReadFailureException, TimeoutException} = require('../src/d
 describe("Device Driver", function () {
     const INIT_ADDRESS = 0x00;
     const PROGRAM_COMMAND = 0x40;
-    const AN_ADDRESS = 0xFF;
+    const AN_ADDRESS = 0xCC;
     const READY = 2;
     const BUSY = 0;
     const A_VALUE = 0;
