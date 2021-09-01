@@ -59,7 +59,7 @@ describe("Device Driver", function () {
         }, ReadFailureException);
     });
 
-    it('checks if the hardware is ready after a write', () => {
+    it('checks if the hardware is ready after a write', () => { // needs work
         let initAddressReads = 0;
         hardware.read = (address) => {
             if (address === INIT_ADDRESS && initAddressReads === 0) {
@@ -88,7 +88,7 @@ describe("Device Driver", function () {
         const driver = new DeviceDriver(hardware);
 
         assert.throw(() => {
-            driver.write(0xFF, 5)
+            driver.write(AN_ADDRESS, ANOTHER_VALUE)
         }, TimeoutException);
     });
 
