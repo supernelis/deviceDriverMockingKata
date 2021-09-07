@@ -15,6 +15,7 @@ describe("Device Driver", function () {
     const TRIGGER_RESET = 1;
     const READY_BYTE_WITH_INTERNAL_ERROR = 0x11;
     const READY_BYTE_WITH_VPP_PROBLEM = 0x21;
+    const READY_BYTE_WITH_PROTECTED_BLOCK_PROBLEM = 0x09;
 
     let writeLog;
     let memory;
@@ -121,7 +122,7 @@ describe("Device Driver", function () {
     });
 
     it('triggers a protected block error', () => {
-        memory[INIT_ADDRESS] = 0x09;
+        memory[INIT_ADDRESS] = READY_BYTE_WITH_PROTECTED_BLOCK_PROBLEM;
 
         assert.throw(() => {
             driver.write(AN_ADDRESS, A_VALUE);
