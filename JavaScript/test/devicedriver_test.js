@@ -100,8 +100,8 @@ describe("Device Driver", function () {
 
         driver.write(AN_ADDRESS, ANOTHER_VALUE);
 
-        const value = writeLog[writeLog.length - 1];
-        expect(value.address).to.equal(INIT_ADDRESS);
-        expect(value.data).to.equal(RESET_COMMAND);
+        const lastWrite = writeLog[writeLog.length - 1];
+        expect(lastWrite.address).to.equal(INIT_ADDRESS);
+        expect(lastWrite.data).to.equal(RESET_COMMAND);
     });
 });
