@@ -61,7 +61,7 @@ describe("Device Driver", function () {
         }, ReadFailureException);
     });
 
-    it('checks if the hardware is ready after a write', () => { // needs work
+    it('checks if the hardware is ready after a write', () => {
         let readSequenceForInitAddress = [BUSY, READY];
         hardware.read = (address) => {
             if (address === INIT_ADDRESS) {
