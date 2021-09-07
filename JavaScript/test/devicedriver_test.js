@@ -97,20 +97,25 @@ describe("Device Driver", function () {
     it('resets hardware when it is not ready after write', () => {
         let writeData;
         let readSequenceToTriggerReset = [TRIGGER_RESET, READY, ANOTHER_VALUE];
-        const hardware = {
+        const h = {
             read: () => readSequenceToTriggerReset.shift(),
             write: (address, data) => {
                 writeData = {
                     address: address,
                     data: data
-                }
+                };
+                hardware.write(address, data);
             }
         }
-        const device = new DeviceDriver(hardware);
+        const device = new DeviceDriver(h);
 
         device.write(AN_ADDRESS, ANOTHER_VALUE);
 
         expect(writeData.address).to.equal(INIT_ADDRESS);
         expect(writeData.data).to.equal(RESET_COMMAND);
+
+        const value = writeLog[writeLog.length - 1];
+        expect(value.address).to.equal(INIT_ADDRESS);
+        expect(value.data).to.equal(RESET_COMMAND);
     });
 });
