@@ -96,15 +96,9 @@ describe("Device Driver", function () {
 
     it('resets hardware when it is not ready after write', () => {
         let readSequenceToTriggerReset = [TRIGGER_RESET, READY, ANOTHER_VALUE];
-        const h = {
-            read: () => readSequenceToTriggerReset.shift(),
-            write: (address, data) => {
-                hardware.write(address, data);
-            }
-        }
-        const device = new DeviceDriver(h);
+        hardware.read = () => readSequenceToTriggerReset.shift();
 
-        device.write(AN_ADDRESS, ANOTHER_VALUE);
+        driver.write(AN_ADDRESS, ANOTHER_VALUE);
 
         const value = writeLog[writeLog.length - 1];
         expect(value.address).to.equal(INIT_ADDRESS);
