@@ -2,7 +2,6 @@ const {InternalErrorException} = require("../src/devicedriver");
 const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException, VppException} = require('../src/devicedriver');
 
-const READY_BYTE_WITH_VPP_PROBLEM = 0x21;
 describe("Device Driver", function () {
     const INIT_ADDRESS = 0x00;
     const PROGRAM_COMMAND = 0x40;
@@ -13,6 +12,8 @@ describe("Device Driver", function () {
     const ANOTHER_VALUE = 5;
     const RESET_COMMAND = 0xFF;
     const TRIGGER_RESET = 1;
+    const READY_BYTE_WITH_INTERNAL_ERROR = 0x11;
+    const READY_BYTE_WITH_VPP_PROBLEM = 0x21;
 
     let writeLog;
     let memory;
@@ -111,7 +112,7 @@ describe("Device Driver", function () {
     });
 
     it('triggers an internal error', () => {
-        memory[INIT_ADDRESS] = 0x11;
+        memory[INIT_ADDRESS] = READY_BYTE_WITH_INTERNAL_ERROR;
 
         assert.throw(() => {
             driver.write(AN_ADDRESS, A_VALUE);
