@@ -62,10 +62,10 @@ describe("Device Driver", function () {
     });
 
     it('checks if the hardware is ready after a write', () => { // needs work
-        let readSequenceToTriggerReset = [BUSY, READY];
+        let readSequenceForInitAddress = [BUSY, READY];
         hardware.read = (address) => {
             if (address === INIT_ADDRESS) {
-                return readSequenceToTriggerReset.shift();
+                return readSequenceForInitAddress.shift();
             }
 
             return A_VALUE;
@@ -73,7 +73,7 @@ describe("Device Driver", function () {
 
         driver.write(AN_ADDRESS, A_VALUE);
 
-        expect(readSequenceToTriggerReset.length).to.equal(0);
+        expect(readSequenceForInitAddress.length).to.equal(0);
     });
 
     it('timeout', () => {
