@@ -100,7 +100,7 @@ describe("Device Driver", function () {
         expect(lastWrite.data).to.equal(RESET_COMMAND);
     });
 
-    it('does something', () => {
+    it('triggers a VPP problem', () => {
         memory[INIT_ADDRESS] = 0x21;
 
        assert.throw( () => {
