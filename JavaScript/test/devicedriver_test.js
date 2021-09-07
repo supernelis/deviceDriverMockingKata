@@ -1,3 +1,4 @@
+const {ProtectedBlockException} = require("../src/devicedriver");
 const {InternalErrorException} = require("../src/devicedriver");
 const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException, VppException} = require('../src/devicedriver');
@@ -117,6 +118,14 @@ describe("Device Driver", function () {
         assert.throw(() => {
             driver.write(AN_ADDRESS, A_VALUE);
         }, InternalErrorException);
+    });
+
+    it('triggers a protected block error', () => {
+        memory[INIT_ADDRESS] = 0x09;
+
+        assert.throw(() => {
+            driver.write(AN_ADDRESS, A_VALUE);
+        }, ProtectedBlockException);
     });
 
 });
