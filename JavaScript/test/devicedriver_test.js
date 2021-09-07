@@ -1,5 +1,5 @@
 const {expect, assert} = require('chai');
-const {DeviceDriver, ReadFailureException, TimeoutException} = require('../src/devicedriver');
+const {DeviceDriver, ReadFailureException, TimeoutException, VppException} = require('../src/devicedriver');
 
 describe("Device Driver", function () {
     const INIT_ADDRESS = 0x00;
@@ -98,5 +98,13 @@ describe("Device Driver", function () {
         const lastWrite = writeLog[writeLog.length - 1];
         expect(lastWrite.address).to.equal(INIT_ADDRESS);
         expect(lastWrite.data).to.equal(RESET_COMMAND);
+    });
+
+    it('does something', () => {
+        memory[INIT_ADDRESS] = 0x21;
+
+       assert.throw( () => {
+            driver.write(AN_ADDRESS, A_VALUE);
+       }, VppException);
     });
 });
