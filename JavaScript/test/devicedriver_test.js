@@ -62,15 +62,12 @@ describe("Device Driver", function () {
     });
 
     it('checks if the hardware is ready after a write', () => { // needs work
+        let readSequenceToTriggerReset = [BUSY, READY, A_VALUE];
         let initAddressReads = 0;
         hardware.read = (address) => {
-            if (address === INIT_ADDRESS && initAddressReads === 0) {
+            if (address === INIT_ADDRESS) {
                 initAddressReads++;
-                return BUSY;
-            }
-            if (address === INIT_ADDRESS && initAddressReads === 1) {
-                initAddressReads++;
-                return READY;
+                return readSequenceToTriggerReset.shift();
             }
 
             return A_VALUE;
