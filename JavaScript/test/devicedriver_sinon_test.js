@@ -2,6 +2,8 @@ const {ProtectedBlockException} = require("../src/devicedriver");
 const {InternalErrorException} = require("../src/devicedriver");
 const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException, VppException} = require('../src/devicedriver');
+const {FlashMemoryDevice} = require ("../src/flashmemorydevice");
+const sinon = require("sinon");
 
 describe("Device Driver", function () {
     const INIT_ADDRESS = 0x00;
@@ -36,8 +38,25 @@ describe("Device Driver", function () {
     });
 
 
+    // "test should call all subscribers when exceptions": function () {
+    //     var myAPI = { method: function () {} };
+    //
+    //     var spy = sinon.spy();
+    //     var mock = sinon.mock(myAPI);
+    //     mock.expects("method").once().throws();
+    //
+    //     PubSub.subscribe("message", myAPI.method);
+    //     PubSub.subscribe("message", spy);
+    //     PubSub.publishSync("message", undefined);
+    //
+    //     mock.verify();
+    //     assert(spy.calledOnce);
+    // }
+
+
     it("reads an address", function () {
-        memory[AN_ADDRESS] = A_VALUE;
+        sinon.stub(FlashMemoryDevice.prototype, 'read').returns(A_VALUE);
+        const driver = new DeviceDriver(new FlashMemoryDevice());
 
         const data = driver.read(AN_ADDRESS);
 
