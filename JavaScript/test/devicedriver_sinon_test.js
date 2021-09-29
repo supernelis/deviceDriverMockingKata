@@ -55,8 +55,9 @@ describe("Device Driver", function () {
 
 
     it("reads an address", function () {
-        sinon.stub(FlashMemoryDevice.prototype, 'read').returns(A_VALUE);
-        const driver = new DeviceDriver(new FlashMemoryDevice());
+        const hardware = new FlashMemoryDevice();
+        sinon.stub(hardware, 'read').returns(A_VALUE);
+        const driver = new DeviceDriver(hardware);
 
         const data = driver.read(AN_ADDRESS);
 
