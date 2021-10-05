@@ -74,11 +74,11 @@ describe("Device Driver", function () {
 
         driver.write(AN_ADDRESS, A_VALUE);
 
-        let [address, data] = hardware.write.getCall(0).args;
+        let [address, data] = hardware.write.firstCall.args;
         expect(address).to.equal(INIT_ADDRESS);
         expect(data).to.equal(PROGRAM_COMMAND);
 
-        [address, data] = hardware.write.getCall(1).args;
+        [address, data] = hardware.write.secondCall.args;
         expect(address).to.equal(AN_ADDRESS);
         expect(data).to.equal(A_VALUE);
     });
