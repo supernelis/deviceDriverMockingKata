@@ -67,10 +67,10 @@ describe("Device Driver", function () {
 
     it("initialise and writes to an address", () => {
         hardware.read = sinon.stub();
-        hardware.read.withArgs(AN_ADDRESS).returns(A_VALUE);
         hardware.read.withArgs(INIT_ADDRESS).returns(READY);
-
         hardware.write = sinon.spy();
+
+        hardware.read.withArgs(AN_ADDRESS).returns(A_VALUE);
 
         driver.write(AN_ADDRESS, A_VALUE);
 
