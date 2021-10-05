@@ -39,17 +39,17 @@ describe("Device Driver", function () {
 
     it("initialise and writes to an address", () => {
         hardware.read = jest.fn();
-        hardware.write = sinon.spy();
+        hardware.write = jest.fn();
 
         hardware.read.mockReturnValueOnce(READY).mockReturnValue(A_VALUE);
 
         driver.write(AN_ADDRESS, A_VALUE);
 
-        let [address, data] = hardware.write.firstCall.args;
+        let [address, data] = hardware.write.mock.calls[0];
         expect(address).to.equal(INIT_ADDRESS);
         expect(data).to.equal(PROGRAM_COMMAND);
 
-        [address, data] = hardware.write.secondCall.args;
+        [address, data] = hardware.write.mock.calls[1];
         expect(address).to.equal(AN_ADDRESS);
         expect(data).to.equal(A_VALUE);
     });
