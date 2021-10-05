@@ -14,6 +14,7 @@
     "sinon": "^11.1.2"
   },
   "scripts": {
-    "test": "nyc --reporter=html mocha"
+    "test": "nyc --reporter=html mocha",
+    "test_jest": "jest"
   }
 }
