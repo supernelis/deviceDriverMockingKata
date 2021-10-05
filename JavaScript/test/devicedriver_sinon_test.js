@@ -2,7 +2,7 @@ const {ProtectedBlockException} = require("../src/devicedriver");
 const {InternalErrorException} = require("../src/devicedriver");
 const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException, VppException} = require('../src/devicedriver');
-const {FlashMemoryDevice} = require ("../src/flashmemorydevice");
+const {FlashMemoryDevice} = require("../src/flashmemorydevice");
 const sinon = require("sinon");
 
 describe("Device Driver", function () {
@@ -70,15 +70,19 @@ describe("Device Driver", function () {
         hardware.read.withArgs(AN_ADDRESS).returns(A_VALUE);
         hardware.read.withArgs(INIT_ADDRESS).returns(READY);
 
+        hardware.write = sinon.spy();
+
         driver.write(AN_ADDRESS, A_VALUE);
 
-        let firstValue = writeLog[0];
-        expect(firstValue['address']).to.equal(INIT_ADDRESS);
-        expect(firstValue['data']).to.equal(PROGRAM_COMMAND);
+        let address = hardware.write.getCall(0).args[0];
+        let data = hardware.write.getCall(0).args[1];
+        expect(address).to.equal(INIT_ADDRESS);
+        expect(data).to.equal(PROGRAM_COMMAND);
 
-        let secondValue = writeLog[1];
-        expect(secondValue['address']).to.equal(AN_ADDRESS);
-        expect(secondValue['data']).to.equal(A_VALUE);
+        address = hardware.write.getCall(1).args[0];
+        data = hardware.write.getCall(1).args[1];
+        expect(address).to.equal(AN_ADDRESS);
+        expect(data).to.equal(A_VALUE);
     });
 
     it('read failure', () => {
@@ -105,7 +109,7 @@ describe("Device Driver", function () {
     });
 
     it('timeout', () => {
-        hardware.read =  () => BUSY
+        hardware.read = () => BUSY
 
         assert.throw(() => {
             driver.write(AN_ADDRESS, ANOTHER_VALUE)
