@@ -1,0 +1,10 @@
+Mock:
+- more verbose
++ describing collaboration using the direct collaborators (on hardware),
+instead of indirect through objects like memory and writelog
++ first and second call make it clearer
+- know sinon
+
+
+Homemade test doubles:
+- memory and writelog are new concepts
