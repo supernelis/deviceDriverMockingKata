@@ -41,7 +41,8 @@ describe("Device Driver", function () {
         hardware.read = jest.fn();
         hardware.write = jest.fn();
 
-        hardware.read.mockReturnValueOnce(READY).mockReturnValue(A_VALUE);
+        when(hardware.read).calledWith(INIT_ADDRESS).mockReturnValue(READY);
+        when(hardware.read).calledWith(AN_ADDRESS).mockReturnValue(A_VALUE);
 
         driver.write(AN_ADDRESS, A_VALUE);
 
