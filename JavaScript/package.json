@@ -8,6 +8,7 @@
     "@types/chai": "4.1.4",
     "@types/mocha": "5.2.5",
     "chai": "~4.1",
+    "jest-when": "^3.4.2",
     "mocha": "^5.2.0",
     "nano-time": "1.0.0",
     "nyc": "15.0.0",
