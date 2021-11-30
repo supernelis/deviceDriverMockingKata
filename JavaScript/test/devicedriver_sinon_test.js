@@ -39,7 +39,7 @@ describe("Device Driver", function () {
 
     it("reads an address", function () {
         const hardware = sinon.createStubInstance(FlashMemoryDevice);
-        hardware.read.returns(A_VALUE);
+        hardware.read.withArgs(AN_ADDRESS).returns(A_VALUE);
 
         const driver = new DeviceDriver(hardware);
 
