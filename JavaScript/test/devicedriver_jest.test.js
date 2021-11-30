@@ -3,7 +3,6 @@ const {InternalErrorException} = require("../src/devicedriver");
 const {expect, assert} = require('chai');
 const {DeviceDriver, ReadFailureException, TimeoutException, VppException} = require('../src/devicedriver');
 const {FlashMemoryDevice} = require("../src/flashmemorydevice");
-const sinon = require("sinon");
 
 describe("Device Driver", function () {
     const INIT_ADDRESS = 0x00;
@@ -51,6 +50,15 @@ describe("Device Driver", function () {
 
         [address, data] = hardware.write.mock.calls[1];
         expect(address).to.equal(AN_ADDRESS);
+        expect(data).to.equal(A_VALUE);
+    });
+
+    it("reads an address", function () {
+        hardware.read = jest.fn();
+        hardware.read.mockReturnValue(A_VALUE);
+
+        const data = driver.read(AN_ADDRESS);
+
         expect(data).to.equal(A_VALUE);
     });
 
